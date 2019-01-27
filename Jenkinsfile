@@ -1,13 +1,14 @@
 node {
 
-    stage 'Checkout'
-    checkout scm
+    stage 'Checkout'}{
+        checkout scm
+    }
 
     stage 'Gradle Static Analysis'
 
-    withSonarQubeEnv {
+    //withSonarQubeEnv {
         //sh "./gradlew clean sonarqube"
-    }
+    //}
 
 
     stage('Build') {
