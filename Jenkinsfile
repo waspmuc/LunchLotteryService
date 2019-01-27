@@ -6,7 +6,7 @@ node {
     stage 'Gradle Static Analysis'
 
     withSonarQubeEnv {
-        #sh "./gradlew clean sonarqube"
+        //sh "./gradlew clean sonarqube"
     }
 
 
