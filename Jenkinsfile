@@ -1,3 +1,5 @@
+#!groovy
+
 node {
 
     stage 'Checkout'
@@ -6,7 +8,7 @@ node {
     stage 'Gradle Static Analysis'
 
     //withSonarQubeEnv {
-        //sh "./gradlew clean sonarqube"
+    //sh "./gradlew clean sonarqube"
     //}
 
 
@@ -17,6 +19,8 @@ node {
     }
     stage('Test') {
         echo 'Testing....'
+        sh "./gradlew clean test"
+        step([$class: 'JUnitResultArchiver', testResults: 'build/test-results/**/TEST-*.xml'])
     }
     stage('Deploy') {
         echo 'Deploying....'
