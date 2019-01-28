@@ -1,3 +1,5 @@
+#!groovy
+
 node {
 
     stage 'Checkout'
@@ -17,6 +19,7 @@ node {
     }
     stage('Test') {
         echo 'Testing....'
+        sh "./gradlew clean test"
     }
     stage('Deploy') {
         echo 'Deploying....'
