@@ -16,15 +16,18 @@ node {
         withSonarQubeEnv('Gefasoft_Jenkins') {
             sh './gradlew clean sonar'
         }
-    }
+        timeout(time: 1, unit: 'MINUTES') {
+            sh 'sleep 10s'
 
-    stage("Quality Gate") {
-        timeout(time: 1, unit: 'HOURS') {
             def qg = waitForQualityGate()
             if (qg.status != 'OK') {
                 error "Pipeline aborted due to quality gate failure: ${qg.status}"
             }
         }
+    }
+
+    stage("Quality Gate") {
+
     }
 
 
