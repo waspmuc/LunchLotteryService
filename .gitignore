@@ -1,9 +1,8 @@
 # file: ~/.gitignore_global
 /.idea/
-.idea/
 .DS_Store
 .gradle/*
 *.iml
 /build
-
+.idea/gradle.xml
 out/

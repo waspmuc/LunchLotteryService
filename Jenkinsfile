@@ -8,15 +8,13 @@ node {
 
     stage('Build') {
         echo 'Building....'
-        sh "./gradlew clean build"
+        sh './gradlew clean build'
 
     }
 
     stage("SonarQube Analysis") {
-        node {
-            withSonarQubeEnv('Gefasoft_Jenkins') {
-                sh 'gradle clean sonar'
-            }
+        withSonarQubeEnv('Gefasoft_Jenkins') {
+            sh './gradlew clean sonar'
         }
     }
 
