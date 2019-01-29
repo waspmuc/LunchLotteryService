@@ -14,8 +14,8 @@ node {
 
     stage("SonarQube Analysis") {
         node {
-            withSonarQubeEnv('My SonarQube Server') {
-                sh 'gradle clean sonar:sonar'
+            withSonarQubeEnv('Gefasoft_Jenkins') {
+                sh 'gradle clean sonar'
             }
         }
     }
