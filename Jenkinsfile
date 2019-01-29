@@ -12,6 +12,12 @@ node {
 
     }
 
+    stage('Test') {
+        echo 'Testing....'
+        sh "./gradlew clean test"
+        step([$class: 'JUnitResultArchiver', testResults: 'build/test-results/**/TEST-*.xml'])
+    }
+
     stage("SonarQube Analysis") {
         withSonarQubeEnv('Gefasoft_Jenkins') {
             sh './gradlew clean sonar'
@@ -26,16 +32,6 @@ node {
         }
     }
 
-    stage("Quality Gate") {
-
-    }
-
-
-    stage('Test') {
-        echo 'Testing....'
-        sh "./gradlew clean test"
-        step([$class: 'JUnitResultArchiver', testResults: 'build/test-results/**/TEST-*.xml'])
-    }
     stage('Deploy') {
         echo 'Deploying....'
     }
