@@ -5,18 +5,31 @@ node {
     stage 'Checkout'
     checkout scm
 
-    stage 'Gradle Static Analysis'
-
-    //withSonarQubeEnv {
-        //sh "./gradlew clean sonarqube"
-    //}
-
 
     stage('Build') {
         echo 'Building....'
         sh "./gradlew clean build"
 
     }
+
+    stage("SonarQube Analysis") {
+        node {
+            withSonarQubeEnv('My SonarQube Server') {
+                sh 'gradle clean sonar:sonar'
+            }
+        }
+    }
+
+    stage("Quality Gate") {
+        timeout(time: 1, unit: 'HOURS') {
+            def qg = waitForQualityGate()
+            if (qg.status != 'OK') {
+                error "Pipeline aborted due to quality gate failure: ${qg.status}"
+            }
+        }
+    }
+
+
     stage('Test') {
         echo 'Testing....'
         sh "./gradlew clean test"
